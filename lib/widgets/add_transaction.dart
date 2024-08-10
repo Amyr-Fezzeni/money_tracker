@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:money_tracker/constants/app_style.dart';
 import 'package:money_tracker/constants/const_data.dart';
 import 'package:money_tracker/models/expense.dart';
 import 'package:money_tracker/service/context_extention.dart';
@@ -30,6 +30,7 @@ class _AddTransactionState extends State<AddTransaction> {
         Expense(
             id: generateId(),
             name: '',
+            note: '',
             type: ExpenseType.expense.name,
             amount: 0,
             date: DateTime.now());
@@ -38,6 +39,8 @@ class _AddTransactionState extends State<AddTransaction> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: OutlineInputBorder(
+          borderRadius: defaultSmallRadius, borderSide: BorderSide.none),
       title: Center(
         child: Txt('${widget.expense == null ? 'NEW' : 'EDIT'}  TRANSACTION',
             bold: true),
@@ -69,11 +72,6 @@ class _AddTransactionState extends State<AddTransaction> {
                     child: TextFormField(
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
-                      // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: '0.00 $money',
-                      ),
                       validator: (text) {
                         if (text == null || text.isEmpty) {
                           return 'Enter an amount';
@@ -81,6 +79,27 @@ class _AddTransactionState extends State<AddTransaction> {
                         return null;
                       },
                       controller: amount,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: context.invertedColor.withOpacity(0.05),
+                        hintText: '0.00 $money',
+                        hintStyle: context.text.copyWith(
+                            color: context.invertedColor.withOpacity(0.4),
+                            fontSize: 14.sp),
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: context.invertedColor.withOpacity(.3)),
+                            borderRadius: defaultSmallRadius),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: context.invertedColor.withOpacity(.3)),
+                            borderRadius: defaultSmallRadius),
+                        border: OutlineInputBorder(
+                          borderRadius: defaultSmallRadius,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -88,7 +107,7 @@ class _AddTransactionState extends State<AddTransaction> {
             ),
             Gap(20.sp),
             settingsPopup(
-                title: 'Type',
+                title: 'Category',
                 selectedValue: (expense.type == ExpenseType.expense.name
                     ? expensesTypes.first['name']
                     : incomesTypes.first['name']) as String,

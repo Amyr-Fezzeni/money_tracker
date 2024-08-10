@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 enum ExpenseType { expense, income }
@@ -7,12 +8,14 @@ class Expense {
   final String id;
   String name;
   String type;
+  String note;
   double amount;
   DateTime date;
   Expense({
     required this.id,
     required this.name,
     required this.type,
+    required this.note,
     required this.amount,
     required this.date,
   });
@@ -22,17 +25,20 @@ class Expense {
       'id': id,
       'name': name,
       'type': type,
+      'note': note,
       'amount': amount,
       'date': date.millisecondsSinceEpoch,
     };
   }
 
   factory Expense.fromMap(Map<String, dynamic> map) {
+    log(map.toString());
     return Expense(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      type: map['type'] as String,
-      amount: map['amount'] as double,
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      type: map['type'] ?? '',
+      note: map['note'] ?? '',
+      amount: map['amount'] ?? 0,
       date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
     );
   }
@@ -44,6 +50,6 @@ class Expense {
 
   @override
   String toString() {
-    return 'Expense(id: $id, name: $name, type: $type, amount: $amount, date: $date)';
+    return 'Expense(id: $id, name: $name, type: $type, note: $note, amount: $amount, date: $date)';
   }
 }

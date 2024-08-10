@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_tracker/views/homepage.dart';
 import 'package:money_tracker/providers/data_provider.dart';
@@ -10,30 +11,18 @@ import 'package:money_tracker/service/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  // ignore: unused_local_variable
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // Preserving the splash screen until initialization completes
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  // Setting system UI mode and preferred orientation
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  // Initializing local data storage
   await LocalData.init();
+  FlutterNativeSplash.remove();
 
-  // Removing the splash screen once initialization is done
-  // FlutterNativeSplash.remove();
-
-  // Running the application with multi providers
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => AppThemeProvider()),
-      ChangeNotifierProvider(create: (_) => DataProvider())
-    ],
-    child: const MyApp(),
-  ));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => AppThemeProvider()),
+    ChangeNotifierProvider(create: (_) => DataProvider())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

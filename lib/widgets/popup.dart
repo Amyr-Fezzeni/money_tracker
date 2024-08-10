@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:money_tracker/service/context_extention.dart';
 import 'package:money_tracker/widgets/custom_text.dart';
 
@@ -52,8 +53,16 @@ Widget settingsPopup(
                                           .withOpacity(.1)
                                       : null),
                               child: Row(
-                                mainAxisSize: MainAxisSize.min,
+                                // mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  Icon(
+                                    e['icon'],
+                                    color: e['name'] == selectedValue
+                                        ? context.appThemeRead.primaryColor
+                                        : null,
+                                    size: 14.sp,
+                                  ),
+                                  const Gap(5),
                                   Expanded(
                                     child: Text(
                                       txt(e['name']),

@@ -8,6 +8,10 @@ primaryButton({String text = '', Color? color, Function? function}) =>
         onPressed: () {
           if (function != null) function();
         },
+        style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(color: color ?? context.iconColor))),
         child: Txt(text, color: color ?? context.primaryColor, bold: true),
       );
     });

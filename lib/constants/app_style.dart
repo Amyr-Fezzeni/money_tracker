@@ -13,8 +13,8 @@ TextStyle titlestyle = GoogleFonts.nunito(
 const lightBgColor = Color.fromARGB(255, 255, 255, 255);
 const darkBgColor = Color.fromARGB(255, 23, 23, 23);
 
-const primaryColorLight = Color(0xff90B2F9);
-const primaryColorDark = Color(0xff90B2F8);
+const primaryColorLight =Color.fromARGB(255, 47, 65, 100);
+const primaryColorDark =  Color(0xff90B2F9);
 
 const primaryGradient = [
   Color.fromARGB(255, 82, 113, 255),
